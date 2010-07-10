@@ -59,6 +59,12 @@ object FileStoreSpecs extends Specification {
       fstore.get("key2") must_== None
     }
 
+    "dump したものからrestore" in {
+      val fstore = new FileStore()
+      val fstore2 = new FileStore()
+      fstore.set("key1", "value3")
+      fstore2.restore(fstore.dump).get("key1") must_== Some ("value3")
+    }
   }
 }
 
@@ -69,3 +75,4 @@ object FileStoreSpecs extends Specification {
 // 3. 既存のキィで更新すると，dump したときに順番が後ろに変化する
 
 // 予想
+// dump したから restore する流れ

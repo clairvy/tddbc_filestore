@@ -17,4 +17,9 @@ class FileStore {
   def get(k:String) = {
     store.find(p => p._1 == k) map(_._2)
   }
+
+  def restore(s : String) = { 
+    store = s.split("\n").map(k_v => {val t = k_v.split(":"); (t(0), t(1))}).toList
+    this
+  }
 }

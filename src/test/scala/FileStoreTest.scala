@@ -3,7 +3,7 @@ import org.specs._
 import org.tddbcnagoya.filestore._
 
 object FileStoreSpecs extends Specification {
-  "set できる" should {
+  "dump できる" should {
     "dump して 空文字を返す" in {
       val fstore = new FileStore()
       fstore.dump must_==""
@@ -58,14 +58,31 @@ object FileStoreSpecs extends Specification {
       val fstore = new FileStore()
       fstore.get("key2") must_== None
     }
+  }
+  
+  "multi できる" should {
+    "multi のset できる" in {
+      val fstore = new FileStore()
+      fstore.set_multi(List(("key1", "value1"), ("key2", "value2")))
+      fstore.get("key1") must_== Some("value1")
+      fstore.get("key2") must_== Some("value2")
+    }
 
+    "multi の get できる" in {
+      val fstore = new FileStore()
+      fstore.set_multi(List(("key1", "value1"), ("key2", "value2")))
+      fstore.get_multi(List("key1", "key2","key3")) must_== List(("key1", "value1"), ("key2", "value2"))
+    }
   }
 }
-
 
 // 1. set キィ+バリューストア / get
 //    dump => String で キィ:バリュー改行のフォーマット
 // 2. 空文字列 or nill キィは変化無し
 // 3. 既存のキィで更新すると，dump したときに順番が後ろに変化する
 
-// 予想
+// RKTM のー．ちょっと良い仕様を見てみたい
+// 4. 2個以上のペアをセットできる．一つのメソッドで 1引数で
+// 5. 2個以上のキィを渡して，キィ，バリューのペアのリストを返す
+//    無いキィの場合は，スルー．(同数が返る訳ではない．)
+// 6. 

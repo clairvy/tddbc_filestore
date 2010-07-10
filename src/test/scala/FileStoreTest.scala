@@ -45,13 +45,13 @@ object FileStoreSpecs extends Specification {
     "get できるよ" in {
       val fstore = new FileStore()
       fstore.set("key1", "value3")
-      fstore.get("key1").get must_== "value3"
+      fstore.get("key1") must_== Some("value3")
     }
 
     "get できるよ" in {
       val fstore = new FileStore()
       fstore.set("key2", "value2")
-      fstore.get("key2").get must_== "value2"
+      fstore.get("key2") must_== Some("value2")
     }
 
     "get できぬ" in {
